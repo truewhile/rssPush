@@ -1,0 +1,47 @@
+import requests
+
+
+headers = {
+        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0",
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'content-type': 'application/xml; charset=utf-8',
+        'cookie': ''
+    }
+
+def lixian(url):
+    form_data = {
+        'ct' :'lixian',
+        'ac' :'add_task_url',
+        'url': url,
+        'savepath': '',
+        'wp_path_id': '2949725193306342620',
+        'uid': '16808018',
+        # 'sign': 'd27f91d820853d693a842161769e5c1a',
+        # 'time': '1726402783'
+    }
+    url_new = 'https://115.com/web/lixian/'
+    response = requests.post(url_new ,params=form_data, headers=headers)
+    response.raise_for_status()  #
+    data = response.json()
+    return data
+def get_path_list(cid):
+    params = {
+        "aid": 1,
+        "cid": cid,
+        "o": "user_ptime",
+        "asc": 0,
+        "offset": 0,
+        "show_dir": 1,
+        "limit": 40,
+        "snap": 0,
+        "natsort": 1,
+        "record_open_time": 1,
+        "count_folders": 1,
+        "format": "json"
+    }
+    url_new = 'https://webapi.115.com/files'
+    response = requests.get(url_new, params=params, headers=headers)
+    response.raise_for_status()  #
+    data = response.json()
+    return data
