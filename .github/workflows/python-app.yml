@@ -19,6 +19,7 @@ on:
         required: true
         default: 'v1.0.0'
 
+
 permissions:
   contents: write
   packages: write
