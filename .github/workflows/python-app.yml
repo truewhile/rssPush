@@ -109,7 +109,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/rssPush
+        asset_path: /home/runner/work/alist-rssPush/alist-rssPush/dist/rssPush
         asset_name: rssPush-debian
         asset_content_type: application/octet-stream
       env:
@@ -119,7 +119,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/rssPush.exe
+        asset_path: D:\a\alist-rssPush\alist-rssPush\dist\rssPush.exe
         asset_name: rssPush-windows.exe
         asset_content_type: application/octet-stream
       env:
@@ -129,7 +129,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./dist/rssPush
+        asset_path: /Users/runner/work/alist-rssPush/alist-rssPush/dist/rssPush
         asset_name: rssPush-macos
         asset_content_type: application/octet-stream
       env:
