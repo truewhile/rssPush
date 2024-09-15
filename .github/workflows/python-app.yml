@@ -19,11 +19,6 @@ on:
         default: 'v1.0.0'
 
 
-permissions:
-  contents: write
-  packages: write
-
-
 jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
