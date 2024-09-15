@@ -5,9 +5,8 @@ name: Python application
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - 'v*.*.*'  # 仅在推送标签符合此模式时触发
   workflow_dispatch:
     inputs:
       release_name:
