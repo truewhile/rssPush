@@ -9,15 +9,32 @@ import platform
 import requests
 import os
 
+# alist
+# alist 链接地址
 alist_url = ""
+# alist中网盘路径
 path = ""
+# alist 离线工具选择
 tool = ""
+
+# 115
+# 115cookie
+cookie = ""
+# 115用户id
+uid = ""
+# 115离线下载路径id
+path_id = ""
+# 是否直接使用115离线
+enable_115 = False
+
+# 配置文件默认路径
 def_path = ""
 if platform.system() == "Windows":
     def_path = "C:/rssConfig"
 else:
     def_path = "/rssConfig"
-# 运行参数
+
+# 运行时参数
 parser = argparse.ArgumentParser(description="rss推送器")
 parser.add_argument("--path", default=def_path, type=str, help="可执行文件路径")
 current_directory = parser.parse_args().path
@@ -119,7 +136,11 @@ def get_rss(token, url_name, rss_url):
             index = check_and_write_json(file_path, rssJson)
             if not index:
                 print("开始下载：" + title)
-                add_offline_download(token, last_part)
+                # 启用115直接使用115连接离线下载，不然使用alist离线模式
+                if enable_115:
+                    lixian_115(last_part)
+                else:
+                    add_offline_download(token, last_part)
     except requests.exceptions.Timeout:
         print("请求超时！")
     except requests.exceptions.RequestException as e:
@@ -178,23 +199,23 @@ def create_config():
 def lixian_115(url):
     # # # 读取配置文件
     config = configparser.ConfigParser(interpolation=None)
-    config.read(current_directory + r'/RssConfig.ini', encoding='utf-8')
+    config.read(configPath, encoding='utf-8')
     headers = {
         'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0",
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'content-type': 'application/xml; charset=utf-8',
         # 'cookie': 'UID=16808018_R1_1726492897; CID=b84ca42deb9eac60f47e165fe98cfc71; SEID=3cf713e82d981c0cc669c6b88ea32841b3c1126568c77d157876e022aeccefbe72d04db9792b28ce4ddd06961d0c63ddee1772f5746ea10cfa19478d'
-        'cookie': config.get('115', 'coolie')
+        'cookie': cookie
     }
     form_data = {
         'ct': 'lixian',
         'ac': 'add_task_url',
         'url': url,
         'savepath': '',
-        'wp_path_id': config.get('115', 'path_id'),
+        'wp_path_id': path_id,
         # 'uid': '16808018',
-        'uid': config.get('115', 'uid'),
+        'uid': uid,
         # 'sign': 'd27f91d820853d693a842161769e5c1a',
         # 'time': '1726402783'
     }
@@ -212,13 +233,15 @@ if __name__ == '__main__':
     create_config()
     config = configparser.ConfigParser(interpolation=None)
     # # # 读取配置文件
-    configPath = current_directory + r'/RssConfig.ini'
     config.read(configPath, encoding='utf-8')
     alist_url = config.get('alist', 'url')
     path = config.get('alist', 'Drive')
     tool = config.get('alist', 'tools')
     user = config.get('alist', 'username')
     passwd = config.get('alist', 'passwd')
+    cookie = config.get('115', 'cookie')
+    path_id = config.get('115', 'path_id')
+    uid = config.get('115', 'uid')
     token = get_token(user, passwd)
     # # 获取RSS
     urls = config.items('RSS')
