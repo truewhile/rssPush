@@ -244,7 +244,9 @@ if __name__ == '__main__':
     path_id = config.get('115', 'path_id')
     uid = config.get('115', 'uid')
     enable_115 = config.getboolean('115', 'enable')
-    token = get_token(user, passwd)
+    token = None
+    if enable_115:
+        token = get_token(user, passwd)
     # # 获取RSS
     urls = config.items('RSS')
     for urlName, url in urls:
