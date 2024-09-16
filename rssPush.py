@@ -155,7 +155,8 @@ def get_rss(token, url_name, rss_url):
 def create_config():
     # 创建配置文件
     if not os.path.isfile(configPath):
-        os.makedirs(current_directory)
+        if not os.path.isdir(current_directory):
+            os.makedirs(current_directory)
         # 创建配置对象
         config = configparser.ConfigParser()
         # 添加一些节和选项
@@ -242,6 +243,7 @@ if __name__ == '__main__':
     cookie = config.get('115', 'cookie')
     path_id = config.get('115', 'path_id')
     uid = config.get('115', 'uid')
+    enable_115 = config.getboolean('115', 'enable')
     token = get_token(user, passwd)
     # # 获取RSS
     urls = config.items('RSS')
