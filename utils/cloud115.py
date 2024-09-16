@@ -6,7 +6,7 @@ headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'content-type': 'application/xml; charset=utf-8',
-        'cookie': ''
+        'cookie': 'UID=16808018_R1_1726492897; CID=b84ca42deb9eac60f47e165fe98cfc71; SEID=3cf713e82d981c0cc669c6b88ea32841b3c1126568c77d157876e022aeccefbe72d04db9792b28ce4ddd06961d0c63ddee1772f5746ea10cfa19478d'
     }
 
 def lixian(url):

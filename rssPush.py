@@ -17,13 +17,15 @@ if platform.system() == "Windows":
     def_path = "C:/rssConfig"
 else:
     def_path = "/rssConfig"
-
+# 运行参数
 parser = argparse.ArgumentParser(description="rss推送器")
 parser.add_argument("--path", default=def_path, type=str, help="可执行文件路径")
 current_directory = parser.parse_args().path
 configPath = current_directory + r'/RssConfig.ini'
 
 
+# 'wp_path_id': '2949725193306342620',
+# 判断rss订阅信息是否已下载
 def check_and_write_json(json_file, json_obj):
     # 如果文件存在，则读取文件内容
     if os.path.exists(json_file):
@@ -46,7 +48,7 @@ def check_and_write_json(json_file, json_obj):
         return False
 
 
-# 添加离线下载任务
+# alist离线下载任务
 def add_offline_download(token, url):
     conn = http.client.HTTPConnection(alist_url)
     payload = json.dumps({
@@ -93,6 +95,7 @@ def get_token(username, passwd):
     return json_data.get('data', {}).get('token', 'Token not found')
 
 
+# 获取rss信息
 def get_rss(token, url_name, rss_url):
     # 下载 RSS 内容
     try:
@@ -127,6 +130,7 @@ def get_rss(token, url_name, rss_url):
         print(f"发生错误: {e}")
 
 
+# 创建配置文件
 def create_config():
     # 创建配置文件
     if not os.path.isfile(configPath):
@@ -143,6 +147,12 @@ def create_config():
         }
         config['RSS'] = {
             'url1': '订阅地址'
+        }
+        config['115'] = {
+            'enable': False,
+            'cookie': '115 cookie',
+            'uid': '用户uid',
+            'path_id': '保存目录id'
         }
 
         # 将配置写入到文件
@@ -164,8 +174,39 @@ def create_config():
         sys.exit()
 
 
-if __name__ == '__main__':
+# 115离线下载
+def lixian_115(url):
+    # # # 读取配置文件
+    config = configparser.ConfigParser(interpolation=None)
+    config.read(current_directory + r'/RssConfig.ini', encoding='utf-8')
+    headers = {
+        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0",
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'content-type': 'application/xml; charset=utf-8',
+        # 'cookie': 'UID=16808018_R1_1726492897; CID=b84ca42deb9eac60f47e165fe98cfc71; SEID=3cf713e82d981c0cc669c6b88ea32841b3c1126568c77d157876e022aeccefbe72d04db9792b28ce4ddd06961d0c63ddee1772f5746ea10cfa19478d'
+        'cookie': config.get('115', 'coolie')
+    }
+    form_data = {
+        'ct': 'lixian',
+        'ac': 'add_task_url',
+        'url': url,
+        'savepath': '',
+        'wp_path_id': config.get('115', 'path_id'),
+        # 'uid': '16808018',
+        'uid': config.get('115', 'uid'),
+        # 'sign': 'd27f91d820853d693a842161769e5c1a',
+        # 'time': '1726402783'
+    }
+    response = requests.post('https://115.com/web/lixian/', params=form_data, headers=headers)
+    response.raise_for_status()
+    data = response.json()
+    if data.get("errno") != 0:
+        print(f"离线下载失败，请检查115 cookie是否失效，{data}")
+        sys.exit(1)
 
+
+if __name__ == '__main__':
     print("运行时间：" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "\n")
     # 创建配置文件
     create_config()

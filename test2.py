@@ -41,7 +41,12 @@ def get_rss():
 
 
 if __name__ == '__main__':
-    # print(lixian('magnet:?xt=urn:btih:430d774a733fdf3940730bb743df7fea4aa38c1c&tr=http%3a%2f%2ft.nyaatracker.com%2fannounce&tr=http%3a%2f%2ftracker.kamigami.org%3a2710%2fannounce&tr=http%3a%2f%2fshare.camoe.cn%3a8080%2fannounce&tr=http%3a%2f%2fopentracker.acgnx.se%2fannounce&tr=http%3a%2f%2fanidex.moe%3a6969%2fannounce&tr=http%3a%2f%2ft.acg.rip%3a6699%2fannounce&tr=https%3a%2f%2ftr.bangumi.moe%3a9696%2fannounce&tr=udp%3a%2f%2ftr.bangumi.moe%3a6969%2fannounce&tr=http%3a%2f%2fopen.acgtracker.com%3a1096%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce'))
-    data_list = get_path_list(2949734693203576720).get('data')
-    for index in data_list:
-        print(f'`{index.get('n')}-{index.get("cid")}`')
+    json = lixian('magnet:?xt=urn:btih:430d774a733fdf3940730bb743df7fea4aa38c1c&tr=http%3a%2f%2ft.nyaatracker.com%2fannounce&tr=http%3a%2f%2ftracker.kamigami.org%3a2710%2fannounce&tr=http%3a%2f%2fshare.camoe.cn%3a8080%2fannounce&tr=http%3a%2f%2fopentracker.acgnx.se%2fannounce&tr=http%3a%2f%2fanidex.moe%3a6969%2fannounce&tr=http%3a%2f%2ft.acg.rip%3a6699%2fannounce&tr=https%3a%2f%2ftr.bangumi.moe%3a9696%2fannounce&tr=udp%3a%2f%2ftr.bangumi.moe%3a6969%2fannounce&tr=http%3a%2f%2fopen.acgtracker.com%3a1096%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce')
+    if json.get("errno") != 0:
+        print(f"离线下载失败，请检查115 cookie是否失效")
+        exit(1)
+    else:
+        print(json)
+    # data_list = get_path_list(2949734693203576720).get('data')
+    # for index in data_list:
+    #     print(f'`{index.get('n')}-{index.get("cid")}`')
