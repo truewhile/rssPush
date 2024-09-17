@@ -213,12 +213,9 @@ def lixian_115(url):
         'ct': 'lixian',
         'ac': 'add_task_url',
         'url': url,
-        'savepath': '',
         'wp_path_id': path_id,
         # 'uid': '16808018',
-        'uid': uid,
-        # 'sign': 'd27f91d820853d693a842161769e5c1a',
-        # 'time': '1726402783'
+        'uid': uid
     }
     response = requests.post('https://115.com/web/lixian/', params=form_data, headers=headers)
     response.raise_for_status()
