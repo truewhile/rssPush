@@ -1,3 +1,4 @@
 fake_useragent==1.5.1
 requests==2.32.3
 pyinstaller==6.10.0
+aniparse==1.2.2
