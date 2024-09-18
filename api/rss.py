@@ -85,3 +85,6 @@ def get_save_path(title):
         return anime_title.replace("/", "")
     else:
         return "默认"
+if __name__ == '__main__':
+    anime_title = aniparse.parse("[喵萌奶茶屋&LoliHouse] 时不时会用俄语向我撒娇的邻座阿莉娅同学 / 不时轻声地以俄语遮羞的邻座艾莉同学 / Roshidere - 11 [WebRip 1080p HEVC-10bit AAC][简繁日内封字幕] [426 MB]").get("anime_title").replace("/", "")
+    print(anime_title)
