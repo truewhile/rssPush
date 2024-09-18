@@ -1,7 +1,7 @@
 import time
 
-import config.config_loader as config_loader
 import api.rss as rss
+import config.config_loader as config_loader
 
 config = config_loader.ConfigLoader()
 

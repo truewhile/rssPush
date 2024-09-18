@@ -1,13 +1,14 @@
 import json
+import os
 import platform
 import xml.etree.ElementTree as ET
 
-import requests
-import os
 import aniparse
-from config import config_loader
+import requests
+
 import api._115 as _115
 import api.alist as alist
+from config import config_loader
 
 config = config_loader.ConfigLoader()
 

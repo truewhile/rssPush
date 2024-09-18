@@ -2,12 +2,13 @@ import argparse
 import configparser
 import http.client
 import json
-import sys
-import xml.etree.ElementTree as ET
-import time
-import platform
-import requests
 import os
+import platform
+import sys
+import time
+import xml.etree.ElementTree as ET
+
+import requests
 
 # alist
 # alist 链接地址

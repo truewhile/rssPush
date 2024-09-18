@@ -1,6 +1,7 @@
 import sys
 
 import requests
+
 from config import config_loader
 
 config = config_loader.ConfigLoader()
