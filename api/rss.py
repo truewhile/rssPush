@@ -8,6 +8,7 @@ import requests
 
 import api._115 as _115
 import api.alist as alist
+import api.ddplay as ddplay
 from config import config_loader
 
 config = config_loader.ConfigLoader()
@@ -65,7 +66,7 @@ def get_rss(url_name, rss_url):
                 print("开始下载：" + title)
                 # 启用115直接使用115连接离线下载，不然使用alist离线模式
                 if config.get_115().get('enable'):
-                    _115.lixian(last_part, get_save_path(title))
+                    _115.lixian(last_part, ddplay.get_anime_name(title))
                 else:
                     alist.add_offline_download(last_part)
     except requests.exceptions.Timeout:
