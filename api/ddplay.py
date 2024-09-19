@@ -28,4 +28,3 @@ def get_anime_name(file_name):
         print(f"网络请求错误: {e}")
     except Exception as e:
         print(f"发生错误: {e}")
->>>>>>> bb7490578c325442f12b7bca957d5dee177cee33
