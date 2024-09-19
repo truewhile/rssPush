@@ -66,7 +66,7 @@ def get_rss(url_name, rss_url):
                 print("开始下载：" + title)
                 # 启用115直接使用115连接离线下载，不然使用alist离线模式
                 if config.get_115().get('enable'):
-                    _115.lixian(last_part, ddplay.get_anime_name(title))
+                    _115.lixian(last_part, ddplay.get_title(title))
                 else:
                     alist.add_offline_download(last_part)
     except requests.exceptions.Timeout:
@@ -79,55 +79,55 @@ def get_rss(url_name, rss_url):
         print(f"发生错误: {e}")
 
 
-# 获取保存路径
-def get_save_path(title):
-    anime_title = aniparse.parse(title).get("anime_title")
-    if anime_title:
-        return anime_title.replace("/", "")
-    else:
-        return "默认"
-import hashlib
+# # 获取保存路径
+# def get_save_path(title):
+#     anime_title = aniparse.parse(title).get("anime_title")
+#     if anime_title:
+#         return anime_title.replace("/", "")
+#     else:
+#         return "默认"
+# import hashlib
 
 
-def calculate_md5_first_16mb_from_url(url):
-    md5_hash = hashlib.md5()
-    chunk_size = 1024  # 每次读取 1KB
-    total_read = 0
-    max_bytes = 16 * 1024 * 1024  # 16MB in bytes
+# def calculate_md5_first_16mb_from_url(url):
+#     md5_hash = hashlib.md5()
+#     chunk_size = 1024  # 每次读取 1KB
+#     total_read = 0
+#     max_bytes = 16 * 1024 * 1024  # 16MB in bytes
 
-    with requests.get(url, stream=True) as r:
-        r.raise_for_status()  # 检查请求是否成功
-        for chunk in r.iter_content(chunk_size=chunk_size):
-            if chunk:
-                if total_read + len(chunk) > max_bytes:
-                    # 如果当前读取的数据超过 16MB，则只取剩余的部分
-                    chunk = chunk[:max_bytes - total_read]
-                md5_hash.update(chunk)
-                total_read += len(chunk)
+#     with requests.get(url, stream=True) as r:
+#         r.raise_for_status()  # 检查请求是否成功
+#         for chunk in r.iter_content(chunk_size=chunk_size):
+#             if chunk:
+#                 if total_read + len(chunk) > max_bytes:
+#                     # 如果当前读取的数据超过 16MB，则只取剩余的部分
+#                     chunk = chunk[:max_bytes - total_read]
+#                 md5_hash.update(chunk)
+#                 total_read += len(chunk)
 
-                # 一旦读取了 16MB，停止
-                if total_read >= max_bytes:
-                    break
+#                 # 一旦读取了 16MB，停止
+#                 if total_read >= max_bytes:
+#                     break
 
-    return md5_hash.hexdigest()
-if __name__ == '__main__':
-    # anime_title = aniparse.parse("[喵萌奶茶屋&LoliHouse] 时不时会用俄语向我撒娇的邻座阿莉娅同学 / 不时轻声地以俄语遮羞的邻座艾莉同学 / Roshidere - 11 [WebRip 1080p HEVC-10bit AAC][简繁日内封字幕] [426 MB]").get("anime_title").replace("/", "")
-    # print(anime_title)
-    # def calculate_md5_first_16mb(file_path):
-    #     md5_hash = hashlib.md5()
-    #     chunk_size = 16 * 1024 * 1024  # 16MB in bytes
-    #
-    #     with open(file_path, "rb") as f:
-    #         # 读取前 16MB 数据
-    #         data = f.read(chunk_size)
-    #         md5_hash.update(data)
-    #
-    #     return md5_hash.hexdigest()
-    #
-    #
-    # # 示例使用
-    # file_path = "C:/Users/whileTrue/Downloads/义妹生活11全片简中.mp4_-_高律酸.mp4"
-    # md5_value = calculate_md5_first_16mb(file_path)
-    # print(f"文件前 16MB 的 MD5 值: {md5_value}")
-    md = calculate_md5_first_16mb_from_url("http://10.0.0.2:5244/d/%E6%9C%AC%E5%9C%B0%E5%8A%A8%E6%BC%AB/%5BLoliHouse%5D%20Tsue%20to%20Tsurugi%20no%20Wistoria%20-%2010%20%5BWebRip%201080p%20HEVC-10bit%20AAC%20SRTx2%5D.mkv?sign=E-NsNzU8rELvon953GmhBJGvTY90s09bu1182N5cIxc=:0")
-    print(md)
+#     return md5_hash.hexdigest()
+# if __name__ == '__main__':
+#     anime_title = aniparse.parse("[喵萌奶茶屋&LoliHouse] 时不时会用俄语向我撒娇的邻座阿莉娅同学 / 不时轻声地以俄语遮羞的邻座艾莉同学 / Roshidere - 11 [WebRip 1080p HEVC-10bit AAC][简繁日内封字幕] [426 MB]").get("anime_title").replace("/", "")
+#     print(anime_title)
+#     def calculate_md5_first_16mb(file_path):
+#         md5_hash = hashlib.md5()
+#         chunk_size = 16 * 1024 * 1024  # 16MB in bytes
+    
+#         with open(file_path, "rb") as f:
+#             # 读取前 16MB 数据
+#             data = f.read(chunk_size)
+#             md5_hash.update(data)
+    
+#         return md5_hash.hexdigest()
+    
+    
+#     # 示例使用
+#     file_path = "C:/Users/whileTrue/Downloads/义妹生活11全片简中.mp4_-_高律酸.mp4"
+#     md5_value = calculate_md5_first_16mb(file_path)
+#     print(f"文件前 16MB 的 MD5 值: {md5_value}")
+#     md = calculate_md5_first_16mb_from_url("http://10.0.0.2:5244/d/%E6%9C%AC%E5%9C%B0%E5%8A%A8%E6%BC%AB/%5BLoliHouse%5D%20Tsue%20to%20Tsurugi%20no%20Wistoria%20-%2010%20%5BWebRip%201080p%20HEVC-10bit%20AAC%20SRTx2%5D.mkv?sign=E-NsNzU8rELvon953GmhBJGvTY90s09bu1182N5cIxc=:0")
+#     print(md)
