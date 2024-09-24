@@ -1,1 +1,8 @@
-
+\[(?P<subgroup>[^\]]+)\](?P<title>[^\]]+?) TV(?P<episode>\d+) \[.*
+\[(?P<subgroup>[^\]]+)\](?P<title>[^\]]+?) OVA (?P<episode>\d+) \[.*
+\[(?P<subgroup>[^\]]+)\] (?P<title>[^\]]+?) \[(?P<episode>\d+)\]
+(?P<title>[^\]]+?) -(?P<episode>\d+)
+\[(?P<subgroup>[^\]]+)].+【(?P<title>[^】]+).+ - (?P<episode>\d+) \[
+\[(?P<subgroup>[^\]]+)\](?P<title>[^\]]+?) - (?P<episode>\d+) \[.*
+\[(?P<subgroup>[^\]]+)(?P<title>[^\]]+?) - (?P<episode>\d+)
+\[(?P<subgroup>[^\]]+)]\[(?P<title>[^\]]+)].+\[(?P<episode>\d+)]\[
