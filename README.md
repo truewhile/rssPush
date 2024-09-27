@@ -10,5 +10,5 @@ pyinstaller --onefile rssPush.py
 下载二进制文件后./rssPush一次后生成配置文件，修改配置文件后再次运行进行rss推送
 设置定时任务 每15分钟刷新订阅
 ````bash
-(crontab -l 2>/dev/null; echo "*/15 * * * * ./root/rssPush >> /rssPush/logs.log") | crontab -
+(crontab -l 2>/dev/null; echo "*/15 * * * * /root/rssPush >> /rssPush/logs.log") | crontab -
 ````
