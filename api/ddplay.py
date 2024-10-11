@@ -1,4 +1,5 @@
 import re
+import sys
 
 import aniparse
 import requests
@@ -28,10 +29,13 @@ def get_anime_name(file_name):
         return anime.get('animeTitle')
     except requests.exceptions.Timeout:
         print("请求超时！")
+        sys.exit(1)
     except requests.exceptions.RequestException as e:
         print(f"网络请求错误: {e}")
+        sys.exit(1)
     except Exception as e:
         print(f"发生错误: {e}")
+        sys.exit(1)
 
 
 def get_title(title):
